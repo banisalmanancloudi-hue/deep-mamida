@@ -3,9 +3,9 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.POLLINATIONS_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: "GEMINI_API_KEY is not configured on the server." });
+    return res.status(500).json({ error: "POLLINATIONS_API_KEY is not configured on the server." });
   }
 
   try {
@@ -14,50 +14,37 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Prompt wajib diisi." });
     }
 
-    const aspectRatio = size === "1024x1536" ? "9:16" : "1:1";
-    const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/interactions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": apiKey
-        },
-        body: JSON.stringify({
-          model: "gemini-3.1-flash-image",
-          input: [
-            {
-              type: "text",
-              text: `Create a premium cinematic background for a motivational quote poster. No text, no letters, no logos. ${prompt}`
-            }
-          ],
-          response_format: [
-            {
-              type: "image",
-              mime_type: "image/jpeg",
-              aspect_ratio: aspectRatio,
-              image_size: "1K"
-            }
-          ]
-        })
-      }
-    );
+    const response = await fetch("https://gen.pollinations.ai/v1/images/generations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: "google/gemini-3.1-flash-image",
+        prompt: `Create a premium cinematic background for a motivational quote poster. No text, no letters, no logos. ${prompt}`,
+        size,
+        response_format: "b64_json",
+        n: 1
+      })
+    });
 
     const data = await response.json();
     if (!response.ok) {
       return res.status(response.status).json({
-        error: data?.error?.message || "Gemini image generation failed."
+        error: data?.error?.message || "Pollinations image generation failed."
       });
     }
 
-    const imageData = data?.output_image?.data;
+    const imageData = data?.data?.[0]?.b64_json;
     if (!imageData) {
-      return res.status(502).json({ error: "Gemini tidak mengembalikan gambar." });
+      return res.status(502).json({ error: "Pollinations tidak mengembalikan gambar." });
     }
 
     return res.status(200).json({
       image: `data:image/jpeg;base64,${imageData}`,
-      provider: "gemini"
+      provider: "pollinations",
+      model: "google/gemini-3.1-flash-image"
     });
   } catch (error) {
     return res.status(500).json({ error: error?.message || "Server error." });
