@@ -55,12 +55,32 @@ jobs:
           if (!imageData) throw new Error('Pollinations returned no image data');
           console.log('Pollinations image generation smoke test: OK');
           NODE
+      - name: Prepare Pages site
+        run: |
+          rm -rf _site
+          mkdir -p _site/nurmotivasi-premium
+          cp -R nurmotivasi-premium/. _site/nurmotivasi-premium/
+          cat > _site/index.html <<'HTML'
+          <!doctype html>
+          <html lang="id">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <meta http-equiv="refresh" content="0; url=./nurmotivasi-premium/">
+            <title>NurMotivasi Studio</title>
+          </head>
+          <body>
+            <p>Membuka NurMotivasi Studio…</p>
+            <p><a href="./nurmotivasi-premium/">Buka NurMotivasi Studio</a></p>
+          </body>
+          </html>
+          HTML
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: './nurmotivasi-premium'
+          path: './_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
