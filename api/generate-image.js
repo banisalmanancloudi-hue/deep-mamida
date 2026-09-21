@@ -1,4 +1,14 @@
 export default async function handler(req, res) {
+  const allowedOrigin = "https://banisalmanancloudi-hue.github.io";
+  res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Vary", "Origin");
+
+  if (req.method === "OPTIONS") {
+    return res.status(204).end();
+  }
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -13,6 +23,12 @@ export default async function handler(req, res) {
     if (!prompt || typeof prompt !== "string") {
       return res.status(400).json({ error: "Prompt wajib diisi." });
     }
+    if (prompt.length > 1000) {
+      return res.status(400).json({ error: "Prompt terlalu panjang (maksimal 1000 karakter)." });
+    }
+
+    const allowedSizes = new Set(["1024x1024", "1024x1536"]);
+    const safeSize = allowedSizes.has(size) ? size : "1024x1024";
 
     const response = await fetch("https://gen.pollinations.ai/v1/images/generations", {
       method: "POST",
@@ -23,7 +39,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "google/gemini-3.1-flash-image",
         prompt: `Create a premium cinematic background for a motivational quote poster. No text, no letters, no logos. ${prompt}`,
-        size,
+        size: safeSize,
         response_format: "b64_json",
         n: 1
       })
