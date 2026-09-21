@@ -50,15 +50,15 @@ jobs:
             })
           });
           const data = await response.json();
-          if (!response.ok) throw new Error(data?.error?.message || 'Pollinations image API request failed');
+          if (!response.ok) throw new Error(data?.error?.message || data?.error || `Pollinations HTTP ${response.status}`);
           const imageData = data?.data?.[0]?.b64_json;
-          if (!imageData) throw new Error('Pollinations returned no base64 image data');
+          if (!imageData) throw new Error('Pollinations returned no image data');
           console.log('Pollinations image generation smoke test: OK');
           NODE
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: './nurmotivasi-premium'
       - name: Deploy to GitHub Pages
