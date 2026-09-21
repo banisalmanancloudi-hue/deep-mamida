@@ -19,3 +19,6 @@ UI AI tetap tersedia. Untuk GitHub Pages murni, endpoint server-side tidak dapat
 
 ## Konten islami
 Teks demo adalah copy inspiratif umum, bukan kutipan Al-Qur'an/hadis. Jika menambahkan ayat atau hadis, sertakan sumber yang akurat.
+
+
+Deployment note: GitHub Pages enablement is requested by the workflow so the first successful run can publish the site.
