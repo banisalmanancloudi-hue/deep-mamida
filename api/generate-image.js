@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         prompt: `Create a premium cinematic background for a motivational quote poster. No text, no letters, no logos. ${prompt}`,
         size: safeSize,
         n: 1,
-        response_format: "url"
+        response_format: "b64_json"
       })
     });
 
@@ -45,13 +45,13 @@ export default async function handler(req, res) {
       });
     }
 
-    const imageUrl = data?.data?.[0]?.url;
-    if (!imageUrl) {
-      return res.status(502).json({ error: "Pollinations tidak mengembalikan URL gambar." });
+    const imageData = data?.data?.[0]?.b64_json;
+    if (!imageData) {
+      return res.status(502).json({ error: "Pollinations tidak mengembalikan data gambar." });
     }
 
     return res.status(200).json({
-      image: imageUrl,
+      image: `data:image/jpeg;base64,${imageData}`,
       provider: "pollinations",
       model: "google/gemini-3.1-flash-image"
     });
