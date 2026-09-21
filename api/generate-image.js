@@ -34,7 +34,7 @@ export default async function handler(req, res) {
           response_format: [
             {
               type: "image",
-              mime_type: "image/png",
+              mime_type: "image/jpeg",
               aspect_ratio: aspectRatio,
               image_size: "1K"
             }
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
     }
 
     return res.status(200).json({
-      image: `data:image/png;base64,${imageData}`,
+      image: `data:image/jpeg;base64,${imageData}`,
       provider: "gemini"
     });
   } catch (error) {
