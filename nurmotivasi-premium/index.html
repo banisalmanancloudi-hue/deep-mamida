@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NurMotivasi Studio — AI Quote Creator</title>
+<meta name="description" content="Studio premium untuk membuat visual motivasi, islami, kata mutiara, dan semangat belajar.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="noise"></div>
+<header class="nav">
+  <a class="logo" href="#"><span class="logo-icon">✦</span><span><b>NurMotivasi</b><small>Studio</small></span></a>
+  <div class="nav-pill"><span class="pulse"></span> Creative workspace</div>
+  <a class="nav-link" href="#studio">Mulai berkarya <span>↗</span></a>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-copy">
+    <div class="kicker"><span></span> VISUAL STORYTELLING FOR GOOD</div>
+    <h1>Kata yang baik,<br><i>visual yang berkesan.</i></h1>
+    <p>Rancang kartu quote yang terasa personal—dari renungan islami sampai semangat belajar—dengan komposisi premium dan siap dibagikan.</p>
+    <div class="hero-actions"><a class="hero-btn" href="#studio">Buka studio <span>↓</span></a><span class="hero-meta">1080px • PNG • 3 format</span></div>
+  </div>
+  <div class="hero-art">
+    <div class="orb orb-a"></div><div class="orb orb-b"></div>
+    <div class="floating-card card-back">✦<br><small>KEEP GOING</small></div>
+    <div class="floating-card card-front"><span>☾</span><small>RENUNGAN</small><strong>“Pelan bukan berarti<br>gagal. Tetap melangkah.”</strong><em>NurMotivasi</em></div>
+  </div>
+</section>
+
+<section id="studio" class="studio">
+  <aside class="control-panel">
+    <div class="panel-head"><div><span class="index">01</span><h2>Compose</h2></div><span class="live-dot">LIVE</span></div>
+    <label class="field">Kategori
+      <select id="category"><option value="motivasi">Motivasi</option><option value="islami">Islami</option><option value="mutiara">Kata Mutiara</option><option value="belajar">Semangat Belajar</option></select>
+    </label>
+    <label class="field">Quote
+      <textarea id="quote" rows="5" placeholder="Tulis kalimat yang ingin kamu bagikan..."></textarea>
+    </label>
+    <div class="chips">
+      <button data-quote="Hari ini mungkin berat, tetapi kamu tidak harus berhenti.">Motivasi</button>
+      <button data-quote="Jaga niat, rapikan ikhtiar, lalu serahkan hasil kepada Allah.">Islami</button>
+      <button data-quote="Tidak semua proses harus terlihat untuk menjadi berarti.">Mutiara</button>
+      <button data-quote="Belajar satu halaman hari ini lebih baik daripada menunggu sempurna.">Belajar</button>
+    </div>
+
+    <div class="divider"></div>
+    <div class="panel-head compact"><div><span class="index">02</span><h2>Appearance</h2></div></div>
+    <div class="swatches" id="themes">
+      <button class="swatch active" data-theme="obsidian"><i></i><span>Obsidian</span></button>
+      <button class="swatch" data-theme="desert"><i></i><span>Desert</span></button>
+      <button class="swatch" data-theme="evergreen"><i></i><span>Evergreen</span></button>
+      <button class="swatch" data-theme="plum"><i></i><span>Plum</span></button>
+    </div>
+    <label class="field">Format
+      <select id="ratio"><option value="square">1:1 · Feed</option><option value="portrait">4:5 · Portrait</option><option value="story">9:16 · Story</option></select>
+    </label>
+
+    <div class="ai-box">
+      <div class="ai-title"><span>✦</span><b>AI Background</b><em>PRO</em></div>
+      <textarea id="aiPrompt" rows="3" placeholder="Anak muda belajar di malam hari, suasana islami, cinematic..."></textarea>
+      <button id="aiGenerate" class="ai-btn">Generate background <span>↗</span></button>
+      <small id="aiHint">AI endpoint dapat dihubungkan saat deployment serverless.</small>
+    </div>
+    <button id="generate" class="create-btn">Render composition <span>✦</span></button>
+  </aside>
+
+  <section class="preview-panel">
+    <div class="preview-top"><div><span class="index">03</span><h2>Canvas</h2></div><span id="status" class="status">Ready to create</span></div>
+    <div class="canvas-stage"><div class="canvas-frame"><canvas id="canvas"></canvas></div><div class="stage-label">LIVE PREVIEW</div></div>
+    <div class="toolbar">
+      <button id="download" class="download">Download PNG <span>↓</span></button>
+      <button id="copy">Copy quote</button><button id="random">Random ✦</button>
+    </div>
+    <div class="specs"><span>1080 px</span><span>•</span><span>High quality</span><span>•</span><span>Browser rendered</span></div>
+  </section>
+</section>
+
+<section class="manifesto">
+  <div class="manifesto-copy"><span class="kicker"><span></span> MADE TO BE SHARED</span><h2>Bagikan sesuatu yang membuat seseorang <i>bertahan satu hari lagi.</i></h2></div>
+  <div class="manifesto-grid"><div><b>01</b><strong>Tenang</strong><span>Ruang visual yang tidak berisik.</span></div><div><b>02</b><strong>Berarti</strong><span>Kata singkat dengan rasa yang dalam.</span></div><div><b>03</b><strong>Konsisten</strong><span>Format siap untuk feed dan story.</span></div></div>
+</section>
+</main>
+<footer><span>NurMotivasi Studio</span><span>BUAT BAIK · BAGIKAN BAIK</span></footer>
+<script src="app.js"></script>
+</body>
+</html>
